@@ -1,12 +1,13 @@
 package com.wys.read.service;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
-import com.sun.javafx.scene.traversal.Direction;
+import com.wys.read.domain.Category;
 import com.wys.read.domain.Markdown;
+import com.wys.read.domain.MarkdownCategory;
+import com.wys.read.repository.CategoryRepository;
+import com.wys.read.repository.MarkdownCateGoryRepository;
 import com.wys.read.repository.MarkdownRepository;
-import org.hibernate.criterion.Order;
+import com.wys.read.utils.Code;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,36 @@ public class MarkdownService {
     @Autowired
     MarkdownRepository markdownRepository;
 
+    @Autowired
+    MarkdownCateGoryRepository mCateGoryRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    /**
+     * 获得md全部数量
+     * @return
+     */
+    public int getmdCount() {
+
+        int count = markdownRepository.findAll().size();
+
+        return count;
+
+    }
+
+    /**
+     * 根据md分类 获得分类的数量
+     * @param category
+     * @return
+     */
+    public int getCategorymdCount(String category) {
+
+        MarkdownCategory markdownCategory = mCateGoryRepository.findMarkdownCategoryByCategory(category);
+        int count = markdownCategory.getCount();
+        return count;
+
+    }
 
     /**
      * 获取最新发布的50篇md
@@ -39,12 +70,59 @@ public class MarkdownService {
      * 分页查询 一页查10条数据
      * @return
      */
-    public List<Markdown> getPagemd() {
+    public List<Markdown> getPagemd(int page) {
+        int size = 10;
+        List<Markdown> list = markdownRepository.findMarkdownsByPage(page, size);
 
-        //markdownRepository.findAll()
-
-
-        return null;
+        return list;
     }
+
+    /**
+     * 上传md
+     * @param markdown
+     * @return
+     */
+    public String uploadmd(Markdown markdown) {
+
+        //Markdown markdown = new Markdown("sad", "twitch", "twitch", "twitch");
+
+        try {
+            markdownRepository.save(markdown);
+            return Code.UploadmdSuccess.toString();
+        }catch (Exception e) {
+            return Code.UploadmdAlready.toString();
+        }
+
+    }
+
+    /**
+     * 将md 分类
+     * 分类成功 mdcategory count加1
+     * @param title
+     * @param category
+     * @return
+     */
+    public String mdclassify(String title, String category) {
+
+        if (title == null) {
+            return Code.MdCategoryDefault.toString();
+        }
+
+        Category catego= new Category(title, category);
+
+        try {
+            categoryRepository.save(catego);
+            int count = categoryRepository.countByCategory(category);
+
+            MarkdownCategory markdownCategory = mCateGoryRepository.findMarkdownCategoryByCategory(category);
+            markdownCategory.setCount(count + 1);
+            mCateGoryRepository.save(markdownCategory);
+            return Code.MdCategorySuccess.toString();
+        }catch (Exception e) {
+            return Code.MdCategoryAlready.toString();
+        }
+    }
+
+
 
 }

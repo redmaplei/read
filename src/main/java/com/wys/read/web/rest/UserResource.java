@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/user")
 public class UserResource {
 
-    @GetMapping(value = "login")
+    @GetMapping(value = "/login")
     public ResponseEntity<String> userLogin(String username, String password) {
 
         String result = "";
-        password = "0cc175b9c0f1b6a831c399e269772661";
+        //password = "0cc175b9c0f1b6a831c399e269772661";
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
         try {
@@ -37,13 +37,19 @@ public class UserResource {
                 .body(result);
     }
 
-    @GetMapping(value = "logout")
+    @GetMapping(value = "/logout")
     public ResponseEntity<String> userLogout(String username) {
 
         String result = "";
 
         return ResponseEntity.ok()
                 .body(result);
+    }
+
+    @GetMapping(value = "/test")
+    public String test() {
+
+        return "test";
     }
 
 }

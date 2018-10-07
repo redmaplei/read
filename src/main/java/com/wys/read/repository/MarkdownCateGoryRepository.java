@@ -16,5 +16,6 @@ import java.util.List;
 @Repository
 public interface MarkdownCateGoryRepository extends JpaRepository<MarkdownCategory, Long> {
 
+    MarkdownCategory findMarkdownCategoryByCategory(String category);
 
 }

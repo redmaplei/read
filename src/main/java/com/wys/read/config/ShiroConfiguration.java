@@ -55,10 +55,12 @@ public class ShiroConfiguration {
         bean.setSecurityManager(securityManager);
 
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/user","anon");
-        filterChainDefinitionMap.put("/md","anon");
+        filterChainDefinitionMap.put("/user/**","anon");
+        filterChainDefinitionMap.put("/md/**","anon");
+//        filterChainDefinitionMap.put("/md/**","authc");
+//        filterChainDefinitionMap.put("/md/getnewmd","anon");
+//        filterChainDefinitionMap.put("/test","anon");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        filterChainDefinitionMap.put("/test","anon");
 
         return bean;
     }

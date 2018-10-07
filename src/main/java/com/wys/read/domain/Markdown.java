@@ -37,6 +37,15 @@ public class Markdown {
      */
     private String category;
 
+    public Markdown() {}
+
+    public Markdown(String title, String time, String info, String category) {
+        this.title = title;
+        this.time = time;
+        this.info = info;
+        this.category = category;
+    }
+
     public Long getId() {
         return id;
     }
