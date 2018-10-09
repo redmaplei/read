@@ -51,10 +51,15 @@ public class AuthRealm extends AuthorizingRealm {
         log.info("realName: {}", realName);
 
         // 封装用户信息，构建AuthenticationInfo对象并返回
-        AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user, user.getPassword()
-                , credentialsSalt, realName);
+//        AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user, user.getPassword()
+//                , credentialsSalt, realName);
 
-        return authcInfo;
+        AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+
+        return authenticationInfo;
+//        return authcInfo;
     }
+
+
 
 }

@@ -65,5 +65,4 @@ public class ShiroConfiguration {
         return bean;
     }
 
-
 }

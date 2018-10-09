@@ -1,8 +1,11 @@
 package com.wys.read.web.rest;
 
+import com.wys.read.domain.User;
+import com.wys.read.utils.DfaDetection;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,7 @@ public class UserResource {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
         try {
+
             subject.login(token);
             result = "success";
         }catch (Exception e) {
@@ -38,18 +42,45 @@ public class UserResource {
     }
 
     @GetMapping(value = "/logout")
-    public ResponseEntity<String> userLogout(String username) {
+    public String userLogout(String username) {
 
         String result = "";
 
-        return ResponseEntity.ok()
-                .body(result);
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            if (subject == null) {
+                return result;
+            }
+            subject.logout();
+            result = "logoutsuccess";
+        }catch (Exception e) {
+            result = "logout error";
+        }
+
+
+        return result;
     }
 
     @GetMapping(value = "/test")
     public String test() {
 
         return "test";
+    }
+
+    @GetMapping(value = "/getlogininfo")
+    public String getlogininfo() {
+
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        return user.getUsername()+user.getPassword();
+
+    }
+
+    @Autowired
+    DfaDetection dfaDetection;
+
+    @GetMapping(value = "dfa")
+    public void dfa() {
+        dfaDetection.detection();
     }
 
 }

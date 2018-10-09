@@ -75,6 +75,23 @@
 			<version>0.9.5.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-core</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.xiaoleilu</groupId>
+			<artifactId>hutool-dfa</artifactId>
+			<version>3.0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
