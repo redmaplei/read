@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface MarkdownRepository extends JpaRepository<Markdown, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM markdown ORDER BY time DESC LIMIT 5")
+    @Query(nativeQuery = true, value = "SELECT * FROM markdown ORDER BY writetime DESC LIMIT 5")
     List<Markdown> findMarkdownsByTimeLimit();
 
     @Query(nativeQuery = true, value = "select * from markdown limit ?1,?2")

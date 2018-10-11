@@ -20,17 +20,17 @@ public class Markdown {
     /**
      * title
      */
-    private String title;
+    private String blogtitle;
 
     /**
      * time
      */
-    private String time;
+    private String writetime;
 
     /**
      * info
      */
-    private String info;
+    private String markdowninfo;
 
     /**
      * catefory
@@ -39,10 +39,10 @@ public class Markdown {
 
     public Markdown() {}
 
-    public Markdown(String title, String time, String info, String category) {
-        this.title = title;
-        this.time = time;
-        this.info = info;
+    public Markdown(String blogtitle, String writetime, String markdowninfo, String category) {
+        this.blogtitle = blogtitle;
+        this.writetime = writetime;
+        this.markdowninfo = markdowninfo;
         this.category = category;
     }
 
@@ -54,28 +54,28 @@ public class Markdown {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getBlogtitle() {
+        return blogtitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBlogtitle(String blogtitle) {
+        this.blogtitle = blogtitle;
     }
 
-    public String getTime() {
-        return time;
+    public String getWritetime() {
+        return writetime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setWritetime(String writetime) {
+        this.writetime = writetime;
     }
 
-    public String getInfo() {
-        return info;
+    public String getMarkdowninfo() {
+        return markdowninfo;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setMarkdowninfo(String markdowninfo) {
+        this.markdowninfo = markdowninfo;
     }
 
     public String getCategory() {

@@ -31,7 +31,7 @@ public class MarkdownRepositoryTest {
     public void s() {
 
         List<Markdown> list = markdownRepository.findMarkdownsByTimeLimit();
-        log.info("list ========================  {}",list.get(4).getTime());
+        log.info("list ========================  {}",list.get(4).getWritetime());
 
     }
 
@@ -46,7 +46,7 @@ public class MarkdownRepositoryTest {
     public void page() {
 
         List<Markdown> list = markdownRepository.findMarkdownsByPage(2, 5);
-        log.info("list ========================  {} {}",list.get(0).getTime(),list.get(3).getTime());
+        log.info("list ========================  {} {}",list.get(0).getWritetime(),list.get(3).getWritetime());
 
     }
 

@@ -1,14 +1,19 @@
 package com.wys.read.web.rest.MarkdownController;
 
+import com.google.gson.Gson;
 import com.wys.read.domain.Markdown;
 import com.wys.read.service.MarkdownService;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: wys
@@ -16,6 +21,7 @@ import java.util.List;
  * @Date: Created in 16:21 2018/10/6
  * @Modified By:
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/md")
 public class MarkdownController {
@@ -25,19 +31,43 @@ public class MarkdownController {
     @Autowired
     MarkdownService markdownService;
 
+    @GetMapping(value = "/do")
+    public ResponseEntity<Map<String, Object>> d() {
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("message", "Hello world");
+        return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/test", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public void test() {
+        System.out.println(" test --- " );
+    }
+
     @GetMapping(value = "/getmdcount")
-    public ResponseEntity getmdcount() {
+    @ResponseBody
+    public String getmdcount() {
         log.info("getmdcount ");
 
         int count = markdownService.getmdCount();
 
-        return ResponseEntity.ok()
-                .body(count);
+//        return ResponseEntity.ok()
+//                .body(count);
+
+//        return count;
+
+        String s = "coutn x";
+        Gson gson = new Gson();
+        s = gson.toJson(s);
+
+        return s;
 
     }
 
     @GetMapping(value = "/getCategorymdCount")
     public ResponseEntity getCategorymdCount(String category) {
+
+        System.out.println("category = " + category);
 
         int count = markdownService.getCategorymdCount(category);
 
@@ -59,6 +89,8 @@ public class MarkdownController {
         return ResponseEntity.ok()
                 .body(list);
     }
+
+
 
     @GetMapping(value = "/getPagemd")
     public ResponseEntity<List<Markdown>> getPagemd(int page) {
