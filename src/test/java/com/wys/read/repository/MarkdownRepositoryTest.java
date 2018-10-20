@@ -45,8 +45,8 @@ public class MarkdownRepositoryTest {
     @Test
     public void page() {
 
-        List<Markdown> list = markdownRepository.findMarkdownsByPage(2, 5);
-        log.info("list ========================  {} {}",list.get(0).getWritetime(),list.get(3).getWritetime());
+        List<Markdown> list = markdownRepository.findMarkdownsByPage(2, 2);
+        log.info("list ========================  {} {}",list.get(0).getWritetime());
 
     }
 

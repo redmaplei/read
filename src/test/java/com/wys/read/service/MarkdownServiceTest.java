@@ -25,16 +25,16 @@ public class MarkdownServiceTest {
     MarkdownService markdownService;
 
     private final Logger log = LoggerFactory.getLogger(MarkdownServiceTest.class);
-    @Test
-    public void uploadmd() {
-
-        Markdown markdown = new Markdown("aaaa", "twitch", "twitch", "twitch");
-
-        String s = markdownService.uploadmd(markdown);
-
-        log.info(" sss  {}", s);
-
-    }
+//    @Test
+//    public void uploadmd() {
+//
+//        Markdown markdown = new Markdown("aaaa", "twitch", "twitch", "twitch", "");
+//
+//        String s = markdownService.uploadmd(markdown);
+//
+//        log.info(" sss  {}", s);
+//
+//    }
 
 
 }

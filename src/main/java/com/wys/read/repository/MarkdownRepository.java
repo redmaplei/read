@@ -22,4 +22,6 @@ public interface MarkdownRepository extends JpaRepository<Markdown, Long> {
     @Query(nativeQuery = true, value = "select * from markdown limit ?1,?2")
     List<Markdown> findMarkdownsByPage(int page, int size);
 
+    Markdown findMarkdownByBlogtitle(String blogtitle);
+
 }

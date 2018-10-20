@@ -1,6 +1,7 @@
 package com.wys.read.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @Author: wys
@@ -18,33 +19,40 @@ public class Markdown {
     private Long id;
 
     /**
+     * MD标题
      * title
      */
     private String blogtitle;
 
     /**
+     * 编写时间
      * time
      */
-    private String writetime;
+    private Date writetime;
 
     /**
+     * MD描述
      * info
      */
     private String markdowninfo;
 
     /**
+     * 分类
      * catefory
      */
     private String category;
 
-    public Markdown() {}
+    /**
+     * mdsrc
+     */
+    private String mdsrc;
 
-    public Markdown(String blogtitle, String writetime, String markdowninfo, String category) {
-        this.blogtitle = blogtitle;
-        this.writetime = writetime;
-        this.markdowninfo = markdowninfo;
-        this.category = category;
-    }
+    /**
+     * md内容
+     */
+    private String mdcontent;
+
+
 
     public Long getId() {
         return id;
@@ -62,11 +70,11 @@ public class Markdown {
         this.blogtitle = blogtitle;
     }
 
-    public String getWritetime() {
+    public Date getWritetime() {
         return writetime;
     }
 
-    public void setWritetime(String writetime) {
+    public void setWritetime(Date writetime) {
         this.writetime = writetime;
     }
 
@@ -84,5 +92,21 @@ public class Markdown {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getMdsrc() {
+        return mdsrc;
+    }
+
+    public void setMdsrc(String mdsrc) {
+        this.mdsrc = mdsrc;
+    }
+
+    public String getMdContent() {
+        return mdcontent;
+    }
+
+    public void setMdContent(String mdContent) {
+        this.mdcontent = mdContent;
     }
 }

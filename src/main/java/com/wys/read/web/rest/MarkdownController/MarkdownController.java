@@ -2,6 +2,7 @@ package com.wys.read.web.rest.MarkdownController;
 
 import com.google.gson.Gson;
 import com.wys.read.domain.Markdown;
+import com.wys.read.repository.MarkdownRepository;
 import com.wys.read.service.MarkdownService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
@@ -31,6 +32,13 @@ public class MarkdownController {
     @Autowired
     MarkdownService markdownService;
 
+    @Autowired
+    MarkdownRepository markdownRepository;
+
+    /**
+     * 测试用
+     * @return
+     */
     @GetMapping(value = "/do")
     public ResponseEntity<Map<String, Object>> d() {
         Map<String,Object> map = new HashMap<String,Object>();
@@ -38,32 +46,35 @@ public class MarkdownController {
         return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
     }
 
+    /**
+     * 测试用
+     */
     @GetMapping(value = "/test", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public void test() {
         System.out.println(" test --- " );
     }
 
+    /**
+     * 获得md 数量
+     * @return
+     */
     @GetMapping(value = "/getmdcount")
     @ResponseBody
-    public String getmdcount() {
+    public ResponseEntity getmdcount() {
         log.info("getmdcount ");
 
         int count = markdownService.getmdCount();
 
-//        return ResponseEntity.ok()
-//                .body(count);
-
-//        return count;
-
-        String s = "coutn x";
-        Gson gson = new Gson();
-        s = gson.toJson(s);
-
-        return s;
-
+        return ResponseEntity.ok()
+                .body(count);
     }
 
+    /**
+     * 获得分类的数量
+     * @param category
+     * @return
+     */
     @GetMapping(value = "/getCategorymdCount")
     public ResponseEntity getCategorymdCount(String category) {
 
@@ -73,9 +84,12 @@ public class MarkdownController {
 
         return ResponseEntity.ok()
                 .body(count);
-
     }
 
+    /**
+     * 获得最新的5篇md
+     * @return
+     */
     @GetMapping(value = "/getnewmd")
     public ResponseEntity<List<Markdown>> getNewmd() {
         log.info("getnewmd ");
@@ -90,8 +104,25 @@ public class MarkdownController {
                 .body(list);
     }
 
+    /**
+     * 通过blogtitle获得一篇md
+     * @param blogtitle
+     * @return
+     */
+    @GetMapping(value = "/getmd")
+    public ResponseEntity<Markdown> getmd(String blogtitle) {
 
+        Markdown markdown = markdownRepository.findMarkdownByBlogtitle(blogtitle);
 
+        return ResponseEntity.ok()
+                .body(markdown);
+    }
+
+    /**
+     * 分页获得md
+     * @param page 获取的页数
+     * @return
+     */
     @GetMapping(value = "/getPagemd")
     public ResponseEntity<List<Markdown>> getPagemd(int page) {
 
@@ -108,6 +139,7 @@ public class MarkdownController {
 
     /**
      * 待 前端 接入
+     * 上传一片md
      * @param markdown
      * @return
      */
@@ -121,6 +153,12 @@ public class MarkdownController {
 
     }
 
+    /**
+     * 将md进行分类
+     * @param title
+     * @param category
+     * @return
+     */
     @PostMapping(value = "/mdclassify")
     public ResponseEntity mdclassify(String title, String category) {
         log.info("mdclassify ");
