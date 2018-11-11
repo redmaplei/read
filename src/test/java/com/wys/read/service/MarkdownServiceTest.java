@@ -1,9 +1,6 @@
 package com.wys.read.service;
 
 import com.wys.read.ReadApplication;
-import com.wys.read.domain.Markdown;
-import com.wys.read.repository.MarkdownRepositoryTest;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -10,7 +10,6 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "md_category")
 public class Category {
 
     @Id

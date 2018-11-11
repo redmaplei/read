@@ -1,11 +1,8 @@
 package com.wys.read.repository;
 
-import com.wys.read.domain.Markdown;
 import com.wys.read.domain.MarkdownCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @Author: wys

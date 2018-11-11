@@ -11,7 +11,6 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "markdown")
 public class Markdown {
 
     @Id
@@ -51,7 +50,6 @@ public class Markdown {
      * md内容
      */
     private String mdcontent;
-
 
 
     public Long getId() {

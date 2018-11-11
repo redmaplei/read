@@ -1,10 +1,8 @@
 package com.wys.read.web.rest.MarkdownController;
 
-import com.google.gson.Gson;
 import com.wys.read.domain.Markdown;
 import com.wys.read.repository.MarkdownRepository;
 import com.wys.read.service.MarkdownService;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +93,6 @@ public class MarkdownController {
         log.info("getnewmd ");
 
         List<Markdown> list = markdownService.getNewmd();
-
         if (list.isEmpty()) {
             return ResponseEntity.status(400)
                     .body(null);
@@ -112,7 +109,11 @@ public class MarkdownController {
     @GetMapping(value = "/getmd")
     public ResponseEntity<Markdown> getmd(String blogtitle) {
 
+        log.info("{}", blogtitle);
+
         Markdown markdown = markdownRepository.findMarkdownByBlogtitle(blogtitle);
+
+        log.info("getmd  {}", markdown);
 
         return ResponseEntity.ok()
                 .body(markdown);
@@ -139,7 +140,7 @@ public class MarkdownController {
 
     /**
      * 待 前端 接入
-     * 上传一片md
+     * 上传一篇md
      * @param markdown
      * @return
      */
