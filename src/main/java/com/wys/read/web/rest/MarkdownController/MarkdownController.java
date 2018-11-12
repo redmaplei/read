@@ -144,13 +144,15 @@ public class MarkdownController {
      * @param markdown
      * @return
      */
-    @PostMapping(value = "uploadmd")
-    public ResponseEntity uploadmd(@RequestBody Markdown markdown) {
+    @GetMapping(value = "/uploadmd")
+    public ResponseEntity uploadmd(String markdown) {
 
-        String result = markdownService.uploadmd(markdown);
+        log.info("uploadmd {}", markdown);
+//        @RequestBody Markdown markdown
+//        String result = markdownService.uploadmd(markdown);
 
         return ResponseEntity.ok()
-                .body(result);
+                .body("result");
 
     }
 
