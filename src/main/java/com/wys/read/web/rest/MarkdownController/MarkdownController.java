@@ -50,7 +50,7 @@ public class MarkdownController {
     @GetMapping(value = "/test", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public void test() {
-        System.out.println(" test --- " );
+        System.out.println(" test --- \n 11/18" );
     }
 
     /**
