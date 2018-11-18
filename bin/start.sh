@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-APP_JAR_NAME="${project.build.finalName}.jar"
+APP_JAR_NAME="read-0.0.1-SNAPSHOT.jar"
 JVM_ARGS="-server -Xms1024m -Xmn512m"
 
 check(){
