@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     /**
-     * 登录
+     * 登录  前端没完成
      * @param usr 用户名
      * @param passwd 登录密码
      * @return
