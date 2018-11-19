@@ -149,10 +149,10 @@ public class MarkdownController {
     @GetMapping(value = "/uploadmd")
     public ResponseEntity uploadmd(String markdown) {
 
-        if (markdown == null) {
+        if (markdown == null || markdown.equals("")) {
             ReadErrorCodeEnum.SUCCESS.setMsg("md参数错误");
             return ResponseEntity.ok()
-                    .body(ReadErrorCodeEnum.SUCCESS.getCode()+ReadErrorCodeEnum.SUCCESS.getMsg());
+                    .body("参数错误"+ReadErrorCodeEnum.SUCCESS.getCode()+ReadErrorCodeEnum.SUCCESS.getMsg());
         }
 
         log.info("uploadmd {}", markdown);
