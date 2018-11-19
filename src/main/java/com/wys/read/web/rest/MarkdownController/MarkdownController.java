@@ -1,6 +1,7 @@
 package com.wys.read.web.rest.MarkdownController;
 
 import com.wys.read.domain.Markdown;
+import com.wys.read.exception.ReadErrorCodeEnum;
 import com.wys.read.repository.MarkdownRepository;
 import com.wys.read.service.MarkdownService;
 import org.slf4j.Logger;
@@ -147,6 +148,12 @@ public class MarkdownController {
      */
     @GetMapping(value = "/uploadmd")
     public ResponseEntity uploadmd(String markdown) {
+
+        if (markdown == null) {
+            ReadErrorCodeEnum.SUCCESS.setMsg("md参数错误");
+            return ResponseEntity.ok()
+                    .body(ReadErrorCodeEnum.SUCCESS.getCode()+ReadErrorCodeEnum.SUCCESS.getMsg());
+        }
 
         log.info("uploadmd {}", markdown);
 //        @RequestBody Markdown markdown
