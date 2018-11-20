@@ -65,8 +65,8 @@
 
 		<dependency>
 			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-core</artifactId>
-			<version>4.0.0</version>
+			<artifactId>hutool-all</artifactId>
+			<version>4.1.19</version>
 		</dependency>
 
 		<dependency>
