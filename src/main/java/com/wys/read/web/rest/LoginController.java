@@ -1,16 +1,15 @@
 package com.wys.read.web.rest;
 
 import com.wys.read.domain.User;
+import com.wys.read.exception.ReadCodeEnum;
 import com.wys.read.utils.DfaDetection;
+import com.wys.read.vo.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: wys
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: Created in 9:58 2018/10/6
  * @Modified By:
  */
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/user")
@@ -30,23 +30,30 @@ public class LoginController {
      * @return
      */
     @GetMapping(value = "/login")
-    public ResponseEntity<String> userLogin(String usr, String passwd) {
+    public Result<Void> userLogin(String usr, String passwd) {
 
-        String result = "";
+        Result.ResultBuilder<Void> result = Result.builder();
+
+        if (usr == "" || passwd == "") {
+            result.code(ReadCodeEnum.LOGIN_INFO_NULL.getCode())
+                    .msg(ReadCodeEnum.LOGIN_INFO_NULL.getMsg());
+            return result.build();
+        }
+
         //password = "0cc175b9c0f1b6a831c399e269772661";
         UsernamePasswordToken token = new UsernamePasswordToken(usr, passwd);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            result = "success";
+            result.code(ReadCodeEnum.LOGIN_SUCCESS.getCode())
+                    .msg(ReadCodeEnum.LOGIN_SUCCESS.getMsg());
         }catch (Exception e) {
-            e.printStackTrace();
-            result = "error";
+            log.error("{}", e.getMessage());
+            result.code(ReadCodeEnum.LOGIN_INFO_ERROR.getCode())
+                    .msg(ReadCodeEnum.LOGIN_INFO_ERROR.getMsg());
         }
 
-        return ResponseEntity.ok()
-                .body(result);
-//        return result;
+        return result.build();
     }
 
     /**
@@ -55,35 +62,48 @@ public class LoginController {
      * @return
      */
     @GetMapping(value = "/logout")
-    public String userLogout(String username) {
+    public Result<Void> userLogout(String username) {
 
-        String result = "";
+        Result.ResultBuilder<Void> result = Result.builder();
+
+        if (username == "") {
+            return result.code(ReadCodeEnum.LOGOUT_USERNAME_NULL.getCode())
+                    .msg(ReadCodeEnum.LOGOUT_USERNAME_NULL.getMsg())
+                    .build();
+        }
 
         Subject subject = SecurityUtils.getSubject();
         try {
             if (subject == null) {
-                return result;
+                return result.code(ReadCodeEnum.LOGOUT_USERNAME_NULL.getCode())
+                        .msg(ReadCodeEnum.LOGOUT_USERNAME_NULL.getMsg())
+                        .build();
             }
             subject.logout();
-            result = "logoutsuccess";
+            result.code(ReadCodeEnum.LOGOUT_SUCCESS.getCode())
+                    .msg(ReadCodeEnum.LOGOUT_SUCCESS.getMsg());
         }catch (Exception e) {
-            result = "logout error";
+            result.code(ReadCodeEnum.LOGOUT_FALUT.getCode())
+                    .msg(ReadCodeEnum.LOGOUT_FALUT.getMsg());
         }
 
-
-        return result;
+        return result.build();
     }
 
     /**
      * 获得登录的用户信息
      * @return
      */
-    @GetMapping(value = "/getlogininfo")
-    public String getlogininfo() {
+    @GetMapping(value = "/getuserinfo")
+    public Result<String> getUserinfo() {
+
+        Result.ResultBuilder<String> result = Result.builder();
 
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        return user.getUsername()+user.getPassword();
-
+        return result.code(ReadCodeEnum.GET_SUCCESS.getCode())
+                .msg(ReadCodeEnum.GET_SUCCESS.getMsg())
+                .data(user.getUsername() + user.getPassword())
+                .build();
     }
 
     @Autowired

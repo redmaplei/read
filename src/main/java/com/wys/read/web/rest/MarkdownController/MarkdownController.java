@@ -1,19 +1,16 @@
 package com.wys.read.web.rest.MarkdownController;
 
 import com.wys.read.domain.Markdown;
-import com.wys.read.exception.ReadErrorCodeEnum;
+import com.wys.read.exception.ReadCodeEnum;
 import com.wys.read.repository.MarkdownRepository;
 import com.wys.read.service.MarkdownService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: wys
@@ -35,27 +32,6 @@ public class MarkdownController {
     MarkdownRepository markdownRepository;
 
     /**
-     * 测试用
-     * @return
-     */
-    @GetMapping(value = "/do")
-    public ResponseEntity<Map<String, Object>> d() {
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("message", "Hello world");
-        return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
-    }
-
-    /**
-     * 测试用
-     */
-    @GetMapping(value = "/test", produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public String test() {
-        System.out.println(" test --- \n 11/18" );
-        return " test --- \n 11/18";
-    }
-
-    /**
      * 获得md 数量
      * @return
      */
@@ -63,9 +39,7 @@ public class MarkdownController {
     @ResponseBody
     public ResponseEntity getmdcount() {
         log.info("getmdcount ");
-
         int count = markdownService.getmdCount();
-
         return ResponseEntity.ok()
                 .body(count);
     }
@@ -77,11 +51,7 @@ public class MarkdownController {
      */
     @GetMapping(value = "/getCategorymdCount")
     public ResponseEntity getCategorymdCount(String category) {
-
-        System.out.println("category = " + category);
-
         int count = markdownService.getCategorymdCount(category);
-
         return ResponseEntity.ok()
                 .body(count);
     }
@@ -110,13 +80,8 @@ public class MarkdownController {
      */
     @GetMapping(value = "/getmd")
     public ResponseEntity<Markdown> getmd(String blogtitle) {
-
-        log.info("{}", blogtitle);
-
+        log.info("getmd {}", blogtitle);
         Markdown markdown = markdownRepository.findMarkdownByBlogtitle(blogtitle);
-
-        log.info("getmd  {}", markdown);
-
         return ResponseEntity.ok()
                 .body(markdown);
     }
@@ -137,7 +102,6 @@ public class MarkdownController {
         }
         return ResponseEntity.ok()
                 .body(list);
-
     }
 
     /**
@@ -147,21 +111,19 @@ public class MarkdownController {
      * @return
      */
     @GetMapping(value = "/uploadmd")
-    public ResponseEntity uploadmd(String markdown) {
+    public ResponseEntity<String> uploadmd(String markdown) {
 
         if (markdown == null || markdown.equals("")) {
-            ReadErrorCodeEnum.SUCCESS.setMsg("md参数错误");
-            return ResponseEntity.ok()
-                    .body("参数错误"+ReadErrorCodeEnum.SUCCESS.getCode()+ReadErrorCodeEnum.SUCCESS.getMsg());
+            ReadCodeEnum.MD_NULL.setMsg("md参数错误");
+            return ResponseEntity.status(300)
+                    .body("参数错误"+ ReadCodeEnum.MD_NULL.getCode() + " " + ReadCodeEnum.MD_NULL.getMsg());
         }
 
         log.info("uploadmd {}", markdown);
-//        @RequestBody Markdown markdown
 //        String result = markdownService.uploadmd(markdown);
 
         return ResponseEntity.ok()
                 .body("result");
-
     }
 
     /**
@@ -172,8 +134,7 @@ public class MarkdownController {
      */
     @PostMapping(value = "/mdclassify")
     public ResponseEntity mdclassify(String title, String category) {
-        log.info("mdclassify ");
-
+        log.info("mdclassify title:{} category:{}", title, category);
         String result = markdownService.mdclassify(title, category);
 
         return ResponseEntity.ok()
