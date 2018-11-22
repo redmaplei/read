@@ -30,7 +30,7 @@ public class LoginController {
      * @return
      */
     @GetMapping(value = "/login")
-    public Result<Void> userLogin(String usr, String passwd) {
+    public Result<Void> userLogin(@RequestParam String usr, @RequestParam String passwd) {
 
         Result.ResultBuilder<Void> result = Result.builder();
 
