@@ -120,7 +120,6 @@ public class MarkdownController {
         }
 
         log.info("uploadmd {}", markdown);
-//        String result = markdownService.uploadmd(markdown);
 
         return ResponseEntity.ok()
                 .body("result");
